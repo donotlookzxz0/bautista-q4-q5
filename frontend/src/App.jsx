@@ -12,6 +12,7 @@ import PaymentScreen from './Screens/PaymentScreen'
 import PlaceOrderScreen from './Screens/PlaceOrderScreen'
 import OrderScreen from './Screens/OrderScreen'
 import ProfileScreen from './Screens/ProfileScreen'
+import CreateProductScreen from './Screens/CreateProductScreen';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <main className='py-3'>
         <Container>
           <Routes>
-            <Route path='/' element={<HomeScreen />} exact />
+            <Route path='/:category?' element={<HomeScreen />} exact />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
@@ -31,6 +32,7 @@ function App() {
             <Route path='/order/:id' element={<OrderScreen />} />
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/cart/:id?' element={<CartScreen />} />
+            <Route path='/create-a-product/' element={<CreateProductScreen />} />
           </Routes>
         </Container>
       </main>

@@ -33,7 +33,14 @@ class Product(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True)
 
+    def filter_by_category(cls, category):
+        return cls.objects.filter(category=category)
 
+    def update_fields(self, **kwargs):
+        for field, value in kwargs.items():
+            setattr(self, field, value)
+        self.save()
+        
     def __str__(self):
         return self.name
 
@@ -104,4 +111,15 @@ class Contact(models.Model):
 
     def __str__(self):
         return str(self.name)
+    
+class UserProduct(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=7, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
 

@@ -17,9 +17,19 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 class ProductSerializer(serializers.ModelSerializer):
-    # user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.ReadOnlyField(source='user.username'
+
     class Meta:
         model = Product
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        instance.update_fields(**validated_data)
+        return instance
+
+class UserProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProduct
         fields = '__all__'
 
 

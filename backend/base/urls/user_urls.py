@@ -7,5 +7,6 @@ urlpatterns = [
     path('', getUsers, name='users'),
     path('register/', registerUser, name='register'),
     path('profile/update/', updateUserProfile, name='user-profile-update'),
+    path('create-a-product/', create_user_product, name='create_user_product'),
     
 ]

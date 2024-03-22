@@ -29,7 +29,7 @@ function Header() {
                     Profile
                   </NavDropdown.Item>
                 </LinkContainer>
-
+              
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={logoutHandler}>
                   Logout
@@ -42,6 +42,9 @@ function Header() {
                 </Nav.Link>
               </LinkContainer>
             )}
+              <LinkContainer to={'/create-a-product/'}>
+                <Nav.Link>Sell a product</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>

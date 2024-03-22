@@ -14,6 +14,9 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -81,5 +84,18 @@ export const userUpdateProfileReducer = (state = {}, action) => {
 
     default:
       return state;
+  }
+};
+
+export const productCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+      case 'CREATE_PRODUCT':
+          return { loading: true };
+      case 'CREATE_PRODUCT_SUCCESS':
+          return { loading: false, success: true, product: action.payload };
+      case 'CREATE_PRODUCT_FAIL':
+          return { loading: false, error: action.payload };
+      default:
+          return state;
   }
 };

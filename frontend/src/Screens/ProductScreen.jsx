@@ -24,7 +24,6 @@ function ProductScreen() {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
   const navigate = useNavigate();
-
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
@@ -168,7 +167,7 @@ function ProductScreen() {
                       size="large"
                       style={{borderRadius: "20px"}}
                       // color="primary"
-                      color="secondary"
+                      color="primary"
                       // disabled={false}
                       variant="contained"
                     >

@@ -37,7 +37,7 @@ function OrderScreen() {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src =
-      "https://www.paypal.com/sdk/js?client-id=&currency=USD";
+      "https://www.paypal.com/sdk/js?client-id=AXxeCL7K7_33V35vdytXpi2bxeThkMPL53atOMHoIQlTzYa617X75ZV1hDyMoOhLzq2NN8jI6ddzqWVN&currency=USD";
     script.async = true;
     script.onload = () => {
       setSdkReady(true);
@@ -56,15 +56,30 @@ function OrderScreen() {
         setSdkReady(true);
       }
     }
-  }, [dispatch, orderId.id, order, successPay]);
+  }, [dispatch, orderId.id, order, successPay])
 
-
-  const onApproveHandler = (data, actions) => {
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(orderId.id, paymentResult));
   }
 
   const createOrderHandler = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: order.totalPrice,
+            currency_code: "USD",
+          },
+        },
+      ],
+    });
   };
-  
+
+  const onApproveHandler = (data, actions) => {
+    return actions.order.capture().then(function (details) {
+      successPaymentHandler({ id: details.id, status: details.status, update_time: details.update_time });
+    });
+  };
   
   
 
@@ -199,13 +214,14 @@ function OrderScreen() {
                         <PayPalScriptProvider
                           options={{
                             "client-id":
-                              "",
+                              "AXxeCL7K7_33V35vdytXpi2bxeThkMPL53atOMHoIQlTzYa617X75ZV1hDyMoOhLzq2NN8jI6ddzqWVN",
                           }}
                         >
                           <PayPalButtons
                             createOrder={createOrderHandler}
-                            style={{ layout: "vertical" }}
                             onApprove={onApproveHandler}
+                            style={{ layout: "vertical" }}
+                            onSuccess={successPaymentHandler}
                           />
                         </PayPalScriptProvider>
                       )}

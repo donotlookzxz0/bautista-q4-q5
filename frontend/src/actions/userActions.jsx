@@ -14,6 +14,9 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -160,5 +163,36 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
           ? error.response.data.details
           : error.message,
     });
+  }
+};
+
+export const createProduct = (id, productData) => async (dispatch, getState) => {
+  try {
+      console.log('Starting createProduct action...');
+      dispatch({ type: CREATE_PRODUCT_REQUEST });
+
+      const authToken = getState().auth.token;
+      console.log('Auth token:', authToken);
+
+      const config = {
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${authToken}`
+          }
+      };
+
+      console.log('Sending request to create product...');
+      const { data } = await axios.post(`/api/users/${id}/create-a-product/`, productData, config);
+
+      console.log('Received response:', data);
+      dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
+  } catch (error) {
+      console.error('Error creating product:', error);
+      dispatch({ 
+          type: CREATE_PRODUCT_FAIL, 
+          payload: error.response && error.response.data.message 
+          ? error.response.data.message 
+          : error.message
+      });
   }
 };
